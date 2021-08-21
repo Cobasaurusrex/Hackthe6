@@ -20,5 +20,9 @@ host =free-tier.gcp-us-central1.cockroachlabs.cloud
 port =26257
 
 database =ht6-cars-db-3064.defaultdb
+
+
+username = frontend
+pw = avocadotoast
 ```
 
