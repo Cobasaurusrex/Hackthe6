@@ -2,35 +2,81 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const { v4: uuidv4 } = require('uuid');
+const Sequelize = require("sequelize-cockroachdb");
 
+// For secure connection:
+const fs = require('fs');
 
 // init app
 const app = express();
 app.use(fileUpload());
 
-// routes
+// Connect to CockroachDB through Sequelize.
+var dbConfig = require('./config');
+var sequelize = new Sequelize({
+  dialect: dbConfig.dialect,
+  username: dbConfig.username,
+  password: dbConfig.password,
+  host: dbConfig.host,
+  port: dbConfig.port,
+  database: dbConfig.database,
+  dialectOptions: {
+    ssl: {
+      // For secure connection:
+      ca: fs.readFileSync('certs/root.crt')
+                .toString()
+    },
+  },
+  logging: false,
+});
+
+// set up model for cars table 
+const Cars = sequelize.define("car_images", {
+  id: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  }, 
+  filename: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  }, 
+  img: {
+    type: Sequelize.BLOB('long')
+  }
+});
+
+// routes -----------------------
 app.get('/', (req, res) => {
   res.send('GCP App Engine!');
 });
 
 app.post('/upload', function(req, res) {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).send('No files were uploaded.');
+    }
+  
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let carFile = req.files.carFile;
+  
+    let filename = uuidv4();
+  
+    // upload to database
+    Cars.sync().then(async () => {
+      console.log('cars sync complete');
+      let uploaded = await Cars.create({id: filename, filename: carFile.name, img: carFile});
+  
+      let carsData = await Cars.findAll();
+    
+      carsData.forEach((car) => console.log(car));
+    
+      res.status(200).send(`File ${filename}.jpg uploaded!`);
+    })
+    
+  } catch (e) {
+    res.status(500).send(e);
   }
 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
-
-  let filename = uuidv4();
-
-  // Use the mv() method to place the file somewhere on your server
-  // sampleFile.mv('./uploads/'.concat(filename, ".jpg"), function(err) {
-  sampleFile.mv('uploads/'.concat(filename, ".jpg"), function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send(`File ${filename}.jpg uploaded!`);
-  });
 });
 
 // init listening to app on port

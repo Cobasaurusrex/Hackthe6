@@ -1,5 +1,11 @@
 # cockroachdb
 cockroach-v21.1.7.linux-amd64/
+backend/certs/root.crt
+backend/config.js
+
+# dev
+backend/uploads
+worklog.txt
 
 # nodejs
 node_modules/
