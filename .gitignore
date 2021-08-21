@@ -1,3 +1,6 @@
+# cockroachdb
+cockroach-v21.1.7.linux-amd64/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
