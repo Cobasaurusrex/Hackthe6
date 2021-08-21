@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
 app.post('/upload', function(req, res) {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).send('No files were uploaded.');
+      return res.status(400).json({status: 'error', details: 'No files uploaded'});
     }
   
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
@@ -70,7 +70,7 @@ app.post('/upload', function(req, res) {
     
       carsData.forEach((car) => console.log(car));
     
-      res.status(200).send(`File ${filename}.jpg uploaded!`);
+      res.status(200).json({status: 'success', details: `File ${carFile.name} uploaded!`});
     })
     
   } catch (e) {
