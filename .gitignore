@@ -6,6 +6,7 @@ backend/config.js
 # dev
 backend/uploads
 worklog.txt
+/backend/gcp_key.json
 
 # nodejs
 node_modules/
