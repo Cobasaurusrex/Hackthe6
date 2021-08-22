@@ -1,11 +1,8 @@
 import React from 'react'
 import TestButton from './TestButton'
-import logo from '../logo.png'
-//logo mobile
+import logo from '../autoassist_logo.png'
 import {Toolbar, Typography} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles";
-//import { mergeClasses } from '@material-ui/styles'
-
 
 const styles = makeStyles({
     bar:{
@@ -15,7 +12,7 @@ const styles = makeStyles({
 
     },
     logo: {
-        width: "15%",
+        width: "5%",
 
     },
     menuItem:{
@@ -33,8 +30,8 @@ function NavigationBar() {
     const classes = styles()
     return (
         <Toolbar position="sticky" color="rgba(0,0,0,0.5" className={classes.bar}>
-            <img src={logo} className={classes.logo}/>
-            
+            <img src={logo} className={classes.logo} alt=""/>
+                
             <Typography variant="h6" className={classes.menuItem}>
                 Home
             </Typography>
