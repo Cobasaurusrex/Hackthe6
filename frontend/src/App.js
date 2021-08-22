@@ -1,15 +1,11 @@
-//import logo from './logo.svg';
 import './App.css';
-
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-//import TestButton from './Components/TestButton'
 import NavigationBar from './Components/NavigationBar'
 import TestButton from './Components/TestButton';
 import React, { useState } from 'react'
 
 
 const theme = createMuiTheme({
-  //edit
   palette: {
     primary: {
       main: "#2e1667",
@@ -32,17 +28,12 @@ const theme = createMuiTheme({
       lineHeight: '2rem',
     },
   },
-  // end edit
 
 
 })
 function App() {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
-
-  //FileSelected = event =>{
-  //  console.log(event);
-  //}
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -96,7 +87,6 @@ function App() {
           )}
         </div>
         <div onClick={handleSubmission}>
-          {/* <button onClick={handleSubmission}>Submit</button> */}
           <TestButton txt="Submit" />
         </div>
       </div>
