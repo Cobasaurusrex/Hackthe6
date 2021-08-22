@@ -34,6 +34,9 @@ const theme = createMuiTheme({
 function App() {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [responseLoaded, setResponseLoaded] = useState(false);
+  const [dentDetected, setDentDetected] = useState(false);
+
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -48,6 +51,7 @@ function App() {
 
     fetch(
       'http://35.202.137.102/upload',
+      //'http://localhost:8080/upload',
       {
         method: 'POST',
         body: formData,
@@ -56,6 +60,13 @@ function App() {
       .then((response) => response.json())
       .then((result) => {
         console.log('Success:', result);
+        setResponseLoaded(true);
+
+        if (result.dented) {
+          setDentDetected(true);
+        } else {
+          setDentDetected(false);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -85,6 +96,16 @@ function App() {
           ) : (
             <p>Select a file to show details</p>
           )}
+          <br />
+          <div>
+            {responseLoaded ? (
+              dentDetected ? (
+                <p>Dent detected! Automating your insurance claim now.</p>
+              ) : (
+                <p>No damage detected.</p>
+              )
+            ) : (<div></div>)}
+          </div>
         </div>
         <div onClick={handleSubmission}>
           <TestButton txt="Submit" />

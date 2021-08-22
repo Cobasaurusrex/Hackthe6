@@ -1,6 +1,6 @@
 import React from 'react'
 import TestButton from './TestButton'
-import logo from '../autoassist_logo.png'
+import logo from '../autoassist_logo.svg'
 import {Toolbar, Typography} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles";
 
