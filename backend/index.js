@@ -3,6 +3,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const { v4: uuidv4 } = require('uuid');
 const Sequelize = require("sequelize-cockroachdb");
+const cors = require('cors');
 
 // For secure connection:
 const fs = require('fs');
@@ -10,6 +11,7 @@ const fs = require('fs');
 // init app
 const app = express();
 app.use(fileUpload());
+app.use(cors());
 
 // Connect to CockroachDB through Sequelize.
 var dbConfig = require('./config');
