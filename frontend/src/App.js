@@ -95,9 +95,9 @@ function App() {
             <p>Select a file to show details</p>
           )}
         </div>
-        <div>
-          <button onClick={handleSubmission}>Submit</button>
-          <TestButton txt="Submit" onClick={handleSubmission} />
+        <div onClick={handleSubmission}>
+          {/* <button onClick={handleSubmission}>Submit</button> */}
+          <TestButton txt="Submit" />
         </div>
       </div>
 
